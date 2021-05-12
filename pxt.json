@@ -1,0 +1,31 @@
+{
+    "name": "Super Mario Bros.",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "assets (1)": "pkg:assets (1).json",
+        "super-mario-bros": "github:045665/super-mario-bros#master"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "images.g.jres",
+        "images.g.ts",
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "assets (1).json"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "1.4.41",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}
