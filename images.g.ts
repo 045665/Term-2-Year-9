@@ -22,6 +22,25 @@ namespace myImages {
 . . . e e e . . . . e e e . . . 
 . . e e e e . . . . e e e e . . 
 `;
+            case "=E~F]kNwkTqK@|Ax}Krr":
+            case "SuperShroom":return img`
+. . . . . . 4 4 4 4 . . . . . . 
+. . . . . 4 4 4 4 e e . . . . . 
+. . . . 4 4 4 4 e e e e . . . . 
+. . . 4 4 4 4 4 e e e e e . . . 
+. . 4 4 4 4 4 4 4 e e e 4 4 . . 
+. 4 4 e e e 4 4 4 4 4 4 4 4 4 . 
+. 4 e e e e e 4 4 4 4 4 4 4 4 . 
+4 4 e e e e e 4 4 4 4 4 e e 4 4 
+4 4 e e e e e 4 4 4 4 4 e e e 4 
+4 4 4 e e e 4 4 4 4 4 4 4 e e 4 
+4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 
+. 4 e e e 1 1 1 1 1 1 e e e 4 . 
+. . . . 1 1 1 1 1 1 1 1 . . . . 
+. . . . 1 1 1 1 1 1 4 1 . . . . 
+. . . . 1 1 1 1 1 1 4 1 . . . . 
+. . . . . 1 1 1 1 4 1 . . . . . 
+`;
         }
         return null;
     })

@@ -4,6 +4,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "startMario"
     },
+    "=E~F]kNwkTqK@|Ax}Krr": {
+        "data": "hwQQABAAAAAAAABARAQAAAAAQERERAAAAABE7k7kAAAAQOTu7uQAAABE5O7u5BEBQETk7u4UERFERETuThQREUREREREFBERRO5EREQUERHk7k5ERBQRQeDuTkREFEEUAO5ORETkEQEA4ETkTuQAAAAAROTu5AAAAABARO5EAAAAAABARAQAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "SuperShroom"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",
