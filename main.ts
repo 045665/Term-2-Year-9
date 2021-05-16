@@ -104,12 +104,15 @@ function flip () {
     for (let value34 of chungusWalkAnim) {
         value34.flipX()
     }
+    for (let value34 of upgradeAnim1) {
+        value34.flipX()
+    }
 }
 function breakBlock () {
     if (MarioState == 0) {
         if ((mario.tileKindAt(TileDirection.Top, assets.tile`QM1`) || mario.tileKindAt(TileDirection.Top, assets.tile`QM2`)) && mario.vy < 0) {
             if (mario.tileKindAt(TileDirection.Top, assets.tile`QM2`)) {
-                mushroom = sprites.create(assets.image`SuperShroom`, SpriteKind.Projectile)
+                mushroom = sprites.create(assets.image`SuperShroom`, SpriteKind.Food)
                 tiles.placeOnTile(mushroom, tiles.getTileLocation(mario.x / 16, mario.y / 16 - 2))
                 shroomGravity(mushroom)
             } else {
@@ -155,14 +158,427 @@ function shroomBounceLoop () {
         } else if (activeShroom.isHittingTile(CollisionDirection.Right)) {
             activeShroom.setVelocity(-80, 0)
         }
-        if (mario.overlapsWith(activeShroom)) {
-            activeShroom.destroy()
-            MarioState = 1
-            animState = -1
-            PowerUpSound()
-            mario.y += -16
-        }
     }
+}
+function initSongs () {
+    noteNumOWM = 0
+    overworldMain = [
+    659,
+    659,
+    0,
+    659,
+    0,
+    523,
+    659,
+    0,
+    784,
+    0,
+    0,
+    0,
+    392,
+    0,
+    0,
+    0,
+    523,
+    0,
+    0,
+    392,
+    0,
+    0,
+    330,
+    0,
+    0,
+    440,
+    0,
+    494,
+    0,
+    466,
+    440,
+    0,
+    2,
+    3,
+    4,
+    880,
+    0,
+    698,
+    784,
+    0,
+    659,
+    0,
+    523,
+    587,
+    494,
+    0,
+    0,
+    523,
+    0,
+    0,
+    392,
+    0,
+    0,
+    330,
+    0,
+    0,
+    440,
+    0,
+    494,
+    0,
+    466,
+    440,
+    0,
+    2,
+    3,
+    4,
+    880,
+    0,
+    698,
+    784,
+    0,
+    659,
+    0,
+    523,
+    587,
+    494,
+    0,
+    0,
+    0,
+    0,
+    784,
+    740,
+    698,
+    622,
+    0,
+    659,
+    0,
+    415,
+    440,
+    523,
+    0,
+    440,
+    523,
+    587,
+    0,
+    0,
+    784,
+    740,
+    698,
+    622,
+    0,
+    659,
+    0,
+    1046.50,
+    0,
+    1046.50,
+    1046.50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    784,
+    740,
+    698,
+    622,
+    0,
+    659,
+    0,
+    415,
+    440,
+    523,
+    0,
+    440,
+    523,
+    587,
+    0,
+    0,
+    622,
+    0,
+    0,
+    587,
+    0,
+    0,
+    523,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    784,
+    740,
+    698,
+    622,
+    0,
+    659,
+    0,
+    415,
+    440,
+    523,
+    0,
+    440,
+    523,
+    587,
+    0,
+    0,
+    784,
+    740,
+    698,
+    622,
+    0,
+    659,
+    0,
+    1046.50,
+    0,
+    1046.50,
+    1046.50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    784,
+    740,
+    698,
+    622,
+    0,
+    659,
+    0,
+    415,
+    440,
+    523,
+    0,
+    440,
+    523,
+    587,
+    0,
+    0,
+    622,
+    0,
+    0,
+    587,
+    0,
+    0,
+    523,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+    ]
+    noteNumOWB = 0
+    overworldBase = [
+    147,
+    147,
+    0,
+    147,
+    0,
+    147,
+    147,
+    0,
+    196,
+    0,
+    0,
+    0,
+    98,
+    0,
+    0,
+    0,
+    196,
+    0,
+    0,
+    165,
+    0,
+    0,
+    131,
+    0,
+    0,
+    175,
+    0,
+    196,
+    0,
+    185,
+    175,
+    0,
+    2,
+    3,
+    4,
+    349,
+    0,
+    294,
+    330,
+    0,
+    262,
+    0,
+    220,
+    247,
+    196,
+    0,
+    0,
+    196,
+    0,
+    0,
+    165,
+    0,
+    0,
+    131,
+    0,
+    0,
+    175,
+    0,
+    196,
+    0,
+    185,
+    175,
+    0,
+    2,
+    3,
+    4,
+    349,
+    0,
+    294,
+    330,
+    0,
+    262,
+    0,
+    220,
+    247,
+    196,
+    0,
+    0,
+    131,
+    0,
+    0,
+    196,
+    0,
+    0,
+    262,
+    0,
+    175,
+    0,
+    0,
+    262,
+    0,
+    0,
+    175,
+    0,
+    131,
+    0,
+    0,
+    196,
+    0,
+    0,
+    196,
+    262,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    196,
+    0,
+    131,
+    0,
+    0,
+    196,
+    0,
+    0,
+    262,
+    0,
+    175,
+    0,
+    0,
+    262,
+    0,
+    0,
+    175,
+    0,
+    131,
+    0,
+    208,
+    0,
+    0,
+    233,
+    0,
+    0,
+    262,
+    0,
+    0,
+    196,
+    196,
+    0,
+    131,
+    0,
+    131,
+    0,
+    0,
+    196,
+    0,
+    0,
+    262,
+    0,
+    175,
+    0,
+    0,
+    262,
+    0,
+    0,
+    175,
+    0,
+    131,
+    0,
+    0,
+    196,
+    0,
+    0,
+    196,
+    262,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    196,
+    0,
+    131,
+    0,
+    0,
+    196,
+    0,
+    0,
+    262,
+    0,
+    175,
+    0,
+    0,
+    262,
+    0,
+    0,
+    175,
+    0,
+    131,
+    0,
+    208,
+    0,
+    0,
+    233,
+    0,
+    0,
+    262,
+    0,
+    0,
+    196,
+    196,
+    0,
+    131,
+    0
+    ]
 }
 function PowerUpSound () {
     music.playTone(392, 100)
@@ -189,6 +605,7 @@ function loadAnims () {
     chungusWalkAnim = assets.animation`chungusMarioWalkAnim`
     chungusJumpAnim = assets.animation`chungusJumpAnim`
     fireFlowerAnim = assets.animation`fireFlowerAnim`
+    upgradeAnim1 = assets.animation`upgradeAnim1`
 }
 function walkSpeed () {
     if (controller.B.isPressed()) {
@@ -203,20 +620,36 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    upgrading = 1
     otherSprite.destroy()
+    if (otherSprite == activeShroom) {
+        mario.y += -16
+        MarioState = 1
+        animState = -1
+    } else {
+    	
+    }
     PowerUpSound()
+    upgrading = 0
 })
 function shroomGravity (shroom: Sprite) {
     shroom.setVelocity(80, 0)
     shroom.ay = 1000
-    shroom.lifespan = 5000
     shroom.setBounceOnWall(false)
     activeShroom = shroom
 }
+let noteNum2 = 0
+let noteNum = 0
+let upgrading = 0
 let fireFlowerAnim: Image[] = []
+let overworldBase: number[] = []
+let noteNumOWB = 0
+let overworldMain: number[] = []
+let noteNumOWM = 0
 let activeShroom: Sprite = null
 let flower: Sprite = null
 let mushroom: Sprite = null
+let upgradeAnim1: Image[] = []
 let chungusJumpAnim: Image[] = []
 let jumpAnim: Image[] = []
 let chungusIdleAnim: Image[] = []
@@ -233,226 +666,71 @@ tiles.setTilemap(tilemap`level1`)
 mario = sprites.create(assets.image`startMario`, SpriteKind.Player)
 tiles.placeOnTile(mario, tiles.getTileLocation(5, 13))
 loadAnims()
+initSongs()
 scene.cameraFollowSprite(mario)
 dir = 1
 let Music = 1
 MarioState = 0
-music.setTempo(200)
+let isBig = 0
+music.setTempo(210)
 game.onUpdate(function () {
-    animate()
-    gravity()
-    walkSpeed()
-    breakBlock()
-    shroomBounceLoop()
-})
-forever(function () {
-    if (true) {
-        music.playTone(147, music.beat(BeatFraction.Half))
-        music.playTone(147, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.playTone(147, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.playTone(147, music.beat(BeatFraction.Half))
-        music.playTone(147, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.playTone(196, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Whole))
-        music.playTone(98, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Whole))
-        music.rest(music.beat(BeatFraction.Half))
-        for (let index = 0; index < 2; index++) {
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(165, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(131, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(175, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(185, music.beat(BeatFraction.Half))
-            music.playTone(175, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(165, 200)
-            music.playTone(262, 200)
-            music.playTone(330, 200)
-            music.playTone(349, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(294, music.beat(BeatFraction.Half))
-            music.playTone(330, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(220, music.beat(BeatFraction.Half))
-            music.playTone(247, music.beat(BeatFraction.Half))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-        }
-        for (let index = 0; index < 2; index++) {
-            music.playTone(131, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(175, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(175, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(131, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Double))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(131, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(175, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(175, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(131, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(208, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(233, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(262, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.playTone(196, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(131, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-        }
+    if (!(upgrading)) {
+        animate()
+        gravity()
+        walkSpeed()
+        breakBlock()
+        shroomBounceLoop()
     } else {
-    	
+        mario.setVelocity(0, 0)
+        controller.moveSprite(mario, 0, 0)
+        if (!(isBig)) {
+            animation.runImageAnimation(
+            mario,
+            assets.animation`upgradeAnim1`,
+            200,
+            true
+            )
+            isBig = 1
+        }
     }
 })
-// musicPlay values
-// 
-// 0 = don't change
-// 
-// 1 = change to overworld
-// 
-// 2 = change to underworld
-// 
-// 3 = stop music
 forever(function () {
-    if (true) {
-        music.playTone(659, music.beat(BeatFraction.Half))
-        music.playTone(659, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.playTone(659, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.playTone(523, music.beat(BeatFraction.Half))
-        music.playTone(659, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.playTone(784, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Whole))
-        music.playTone(392, music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Half))
-        music.rest(music.beat(BeatFraction.Whole))
-        for (let index = 0; index < 2; index++) {
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(392, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(330, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(440, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(494, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(466, music.beat(BeatFraction.Half))
-            music.playTone(440, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(392, 200)
-            music.playTone(659, 200)
-            music.playTone(784, 200)
-            music.playTone(880, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(698, music.beat(BeatFraction.Half))
-            music.playTone(784, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(659, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.playTone(587, music.beat(BeatFraction.Half))
-            music.playTone(494, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
+    if (!(upgrading)) {
+        noteNum = overworldMain[noteNumOWM]
+        if (noteNum > 4 || noteNum == 0) {
+            music.playTone(noteNum, music.beat(BeatFraction.Half))
+        } else if (noteNum > 1) {
+            if (noteNum == 2) {
+                music.playTone(392, 185)
+            } else if (noteNum == 3) {
+                music.playTone(659, 185)
+            } else {
+                music.playTone(784, 185)
+            }
         }
-        for (let index = 0; index < 2; index++) {
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(784, music.beat(BeatFraction.Half))
-            music.playTone(740, music.beat(BeatFraction.Half))
-            music.playTone(698, music.beat(BeatFraction.Half))
-            music.playTone(622, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(659, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(415, music.beat(BeatFraction.Half))
-            music.playTone(440, music.beat(BeatFraction.Half))
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(440, music.beat(BeatFraction.Half))
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.playTone(587, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(784, music.beat(BeatFraction.Half))
-            music.playTone(740, music.beat(BeatFraction.Half))
-            music.playTone(698, music.beat(BeatFraction.Half))
-            music.playTone(622, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(659, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(1046.50, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(1046.50, music.beat(BeatFraction.Half))
-            music.playTone(1046.50, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(784, music.beat(BeatFraction.Half))
-            music.playTone(740, music.beat(BeatFraction.Half))
-            music.playTone(698, music.beat(BeatFraction.Half))
-            music.playTone(622, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(659, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(415, music.beat(BeatFraction.Half))
-            music.playTone(440, music.beat(BeatFraction.Half))
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Half))
-            music.playTone(440, music.beat(BeatFraction.Half))
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.playTone(587, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(622, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(587, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.playTone(523, music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Whole))
-            music.rest(music.beat(BeatFraction.Half))
-            music.rest(music.beat(BeatFraction.Double))
+        noteNumOWM += 1
+        if (noteNumOWM > overworldMain.length) {
+            noteNumOWM = 0
         }
-    } else {
-    	
+    }
+})
+forever(function () {
+    if (!(upgrading)) {
+        noteNum2 = overworldBase[noteNumOWB]
+        if (noteNum2 > 4 || noteNum2 == 0) {
+            music.playTone(noteNum2, music.beat(BeatFraction.Half))
+        } else if (noteNum2 > 1) {
+            if (noteNum2 == 2) {
+                music.playTone(165, 185)
+            } else if (noteNum2 == 3) {
+                music.playTone(262, 185)
+            } else {
+                music.playTone(330, 185)
+            }
+        }
+        noteNumOWB += 1
+        if (noteNumOWB > overworldBase.length) {
+            noteNumOWB = 0
+        }
     }
 })
