@@ -84,18 +84,20 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(defeat)) {
         if (!(victory)) {
             if (!(upgrading) && !(goingDownPipe)) {
-                if (MarioState == 2) {
-                    projectile = sprites.create(assets.image`fireball`, SpriteKind.fireball)
-                    projectile.setPosition(mario.x, mario.y)
-                    projectile.lifespan = 2000
-                    if (dir == 0) {
-                        projectile.setVelocity(-200, 0)
-                    } else {
-                        projectile.setVelocity(200, 0)
+                timer.throttle("fireballShoot", 500, function () {
+                    if (MarioState == 2) {
+                        projectile = sprites.create(assets.image`fireball`, SpriteKind.fireball)
+                        projectile.setPosition(mario.x, mario.y)
+                        projectile.lifespan = 2000
+                        if (dir == 0) {
+                            projectile.setVelocity(-200, 0)
+                        } else {
+                            projectile.setVelocity(200, 0)
+                        }
+                        projectile.ay = 1000
+                        projectile.setBounceOnWall(true)
                     }
-                    projectile.ay = 1000
-                    projectile.setBounceOnWall(true)
-                }
+                })
             }
         }
     }
@@ -832,6 +834,7 @@ function loadAnims () {
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.end, function (sprite, otherSprite) {
     victory = 1
+    info.changeScoreBy(5000)
     music.setTempo(150)
     music.setVolume(200)
     mario.x = 3168
