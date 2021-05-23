@@ -4,7 +4,6 @@
     "dependencies": {
         "device": "*",
         "assets (1)": "pkg:assets (1).json",
-        "super-mario-bros": "github:045665/super-mario-bros#master",
         "Timers": "github:microsoft/arcade-timers#v1.1.0"
     },
     "files": [
