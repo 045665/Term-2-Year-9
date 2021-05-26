@@ -2,6 +2,7 @@ namespace SpriteKind {
     export const end = SpriteKind.create()
     export const fortress = SpriteKind.create()
     export const fireball = SpriteKind.create()
+    export const ss = SpriteKind.create()
 }
 function gravity () {
     if (mario.isHittingTile(CollisionDirection.Bottom)) {
@@ -15,7 +16,7 @@ function gravity () {
     if (mario.y > 239) {
         defeat = 1
         controller.moveSprite(mario, 0, 0)
-        mario.setImage(assets.image`MarioDead`)
+        scene.centerCameraAt(mario.x, mario.y)
         gameOverMusic()
         game.over(false)
     }
@@ -951,6 +952,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
             activeGoombas.removeAt(activeGoombas.indexOf(otherSprite))
             otherSprite.destroy()
             velY = -100
+            music.playMelody("D G - - - - - - ", 1000)
+            info.changeScoreBy(100)
         } else {
             if (game.runtime() - lastHit > 2500 || game.runtime() < 2500) {
                 music.buzzer.play()
@@ -958,6 +961,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
                     defeat = 1
                     controller.moveSprite(mario, 0, 0)
                     mario.setImage(assets.image`MarioDead`)
+                    scene.centerCameraAt(mario.x, mario.y)
                     animation.runMovementAnimation(
                     mario,
                     animation.animationPresets(animation.easeDown),
