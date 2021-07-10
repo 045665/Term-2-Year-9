@@ -134,6 +134,7 @@ function upPipe () {
     animState = -1
     controller.moveSprite(mario, 72, 0)
     goingDownPipe = 0
+    inUnderworld = 0
 }
 // dir vars:
 // 0 = left
@@ -784,6 +785,60 @@ function initSongs () {
     131,
     0
     ]
+    noteNumUWB = 0
+    underworldBase = [
+    [131, 150],
+    [262, 150],
+    [110, 150],
+    [220, 150],
+    [116.54, 150],
+    [233, 150],
+    [0, 900],
+    [131, 150],
+    [262, 150],
+    [110, 150],
+    [220, 150],
+    [116.54, 150],
+    [233, 150],
+    [0, 900],
+    [87.31, 150],
+    [175, 150],
+    [73.42, 150],
+    [147, 150],
+    [77.78, 150],
+    [156, 150],
+    [0, 900],
+    [87.31, 150],
+    [175, 150],
+    [73.42, 150],
+    [147, 150],
+    [77.78, 150],
+    [156, 150],
+    [0, 300],
+    [165, 100],
+    [147, 100],
+    [139, 100],
+    [131, 300],
+    [156, 300],
+    [147, 300],
+    [103.83, 300],
+    [98, 300],
+    [139, 300],
+    [131, 100],
+    [185, 100],
+    [175, 100],
+    [165, 100],
+    [233, 100],
+    [220, 100],
+    [208, 200],
+    [156, 200],
+    [123.47, 200],
+    [116.54, 200],
+    [110, 200],
+    [103.83, 200],
+    [0, 1200],
+    [0, 1200]
+    ]
 }
 function gameOverMusic () {
     music.playTone(523, music.beat(BeatFraction.Half))
@@ -939,6 +994,7 @@ function downPipe () {
     animState = -1
     controller.moveSprite(mario, 72, 0)
     goingDownPipe = 0
+    inUnderworld = 1
 }
 function shroomGravity (shroom: Sprite) {
     shroom.setVelocity(80, 0)
@@ -985,6 +1041,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         }
     }
 })
+let noteNum3: number[] = []
 let noteNum2 = 0
 let noteNum = 0
 let startedVictoryAnim = 0
@@ -992,6 +1049,8 @@ let isBig = 0
 let lastHit = 0
 let Goomba: Sprite = null
 let fireFlowerAnim: Image[] = []
+let underworldBase: number[][] = []
+let noteNumUWB = 0
 let overworldBase: number[] = []
 let noteNumOWB = 0
 let overworldMain: number[] = []
@@ -1020,6 +1079,7 @@ let activeBandits: Sprite[] = []
 let banditPos: tiles.Location[] = []
 let activeGoombas: Sprite[] = []
 let goombaPos: tiles.Location[] = []
+let inUnderworld = 0
 let defeat = 0
 let victory = 0
 let MarioState = 0
@@ -1042,6 +1102,7 @@ let Music = 1
 MarioState = 0
 victory = 0
 defeat = 0
+inUnderworld = 0
 goombaPos = tiles.getTilesByType(assets.tile`GoombaSpawn`)
 activeGoombas = []
 banditPos = tiles.getTilesByType(assets.tile`banditSpawn`)
@@ -1134,20 +1195,24 @@ forever(function () {
     if (!(defeat)) {
         if (!(victory)) {
             if (!(upgrading) && !(goingDownPipe)) {
-                noteNum = overworldMain[noteNumOWM]
-                if (noteNum > 4 || noteNum == 0) {
-                    music.playTone(noteNum, music.beat(BeatFraction.Half))
-                } else if (noteNum > 1) {
-                    if (noteNum == 2) {
-                        music.playTone(392, 185)
-                    } else if (noteNum == 3) {
-                        music.playTone(659, 185)
-                    } else {
-                        music.playTone(784, 185)
+                if (!(inUnderworld)) {
+                    noteNum = overworldMain[noteNumOWM]
+                    if (noteNum > 4 || noteNum == 0) {
+                        music.playTone(noteNum, music.beat(BeatFraction.Half))
+                    } else if (noteNum > 1) {
+                        if (noteNum == 2) {
+                            music.playTone(392, 185)
+                        } else if (noteNum == 3) {
+                            music.playTone(659, 185)
+                        } else {
+                            music.playTone(784, 185)
+                        }
                     }
-                }
-                noteNumOWM += 1
-                if (noteNumOWM > overworldMain.length) {
+                    noteNumOWM += 1
+                    if (noteNumOWM > overworldMain.length) {
+                        noteNumOWM = 0
+                    }
+                } else {
                     noteNumOWM = 0
                 }
             }
@@ -1158,21 +1223,31 @@ forever(function () {
     if (!(defeat)) {
         if (!(victory)) {
             if (!(upgrading) && !(goingDownPipe)) {
-                noteNum2 = overworldBase[noteNumOWB]
-                if (noteNum2 > 4 || noteNum2 == 0) {
-                    music.playTone(noteNum2, music.beat(BeatFraction.Half))
-                } else if (noteNum2 > 1) {
-                    if (noteNum2 == 2) {
-                        music.playTone(165, 185)
-                    } else if (noteNum2 == 3) {
-                        music.playTone(262, 185)
-                    } else {
-                        music.playTone(330, 185)
+                if (!(inUnderworld)) {
+                    noteNum2 = overworldBase[noteNumOWB]
+                    if (noteNum2 > 4 || noteNum2 == 0) {
+                        music.playTone(noteNum2, music.beat(BeatFraction.Half))
+                    } else if (noteNum2 > 1) {
+                        if (noteNum2 == 2) {
+                            music.playTone(165, 185)
+                        } else if (noteNum2 == 3) {
+                            music.playTone(262, 185)
+                        } else {
+                            music.playTone(330, 185)
+                        }
                     }
-                }
-                noteNumOWB += 1
-                if (noteNumOWB > overworldBase.length) {
+                    noteNumOWB += 1
+                    if (noteNumOWB > overworldBase.length) {
+                        noteNumOWB = 0
+                    }
+                } else {
                     noteNumOWB = 0
+                    noteNum3 = underworldBase[noteNumUWB]
+                    music.playTone(noteNum3[0], noteNum3[1])
+                    noteNumUWB += 1
+                    if (noteNumUWB >= underworldBase.length) {
+                        noteNumUWB = 0
+                    }
                 }
             }
         }
